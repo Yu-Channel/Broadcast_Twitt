@@ -1,11 +1,16 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://rounded-mplus-1m-medium.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://Scripts/OpenMenu.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/LoadMenu.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=3]
 [ext_resource path="res://Scripts/SaveMenu.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/SystemMenu.gd" type="Script" id=5]
 
 [sub_resource type="DynamicFont" id=7]
+extra_spacing_top = -5
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=13]
 extra_spacing_top = -5
 font_data = ExtResource( 1 )
 
@@ -14,10 +19,10 @@ extra_spacing_top = -4
 extra_spacing_bottom = -2
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=4]
@@ -30,6 +35,9 @@ font_data = ExtResource( 1 )
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=6]
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=12]
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=10]
@@ -51,8 +59,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 512.0
 margin_bottom = 456.0
+mouse_filter = 2
 __meta__ = {
-"_edit_group_": true,
 "_edit_lock_": true
 }
 
@@ -60,11 +68,18 @@ __meta__ = {
 margin_right = 512.0
 margin_bottom = 24.0
 mouse_filter = 2
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="UIColor" type="Control" parent="GUI/Menu"]
 margin_right = 40.0
 margin_bottom = 40.0
 mouse_filter = 2
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="BG" type="ColorRect" parent="GUI/Menu/UIColor"]
 margin_right = 512.0
@@ -85,11 +100,11 @@ margin_bottom = 24.0
 mouse_filter = 2
 color = Color( 0.247059, 0.247059, 0.286275, 1 )
 
-[node name="OpenMenu" type="MenuButton" parent="GUI/Menu"]
+[node name="LoadMenu" type="MenuButton" parent="GUI/Menu"]
 margin_right = 44.0
 margin_bottom = 30.0
 custom_fonts/font = SubResource( 7 )
-text = "Open"
+text = "Load"
 script = ExtResource( 2 )
 
 [node name="SaveMenu" type="MenuButton" parent="GUI/Menu"]
@@ -100,6 +115,14 @@ focus_mode = 2
 custom_fonts/font = SubResource( 7 )
 text = "Save"
 script = ExtResource( 4 )
+
+[node name="SystemMenu" type="MenuButton" parent="GUI/Menu"]
+margin_left = 96.0
+margin_right = 156.0
+margin_bottom = 30.0
+custom_fonts/font = SubResource( 13 )
+text = "System"
+script = ExtResource( 5 )
 
 [node name="CopyButton" type="Button" parent="GUI/Menu"]
 margin_left = 448.0
@@ -112,22 +135,23 @@ text = "Copy"
 margin_top = 24.0
 margin_right = 512.0
 margin_bottom = 456.0
+mouse_filter = 2
 __meta__ = {
 "_edit_group_": true,
 "_edit_lock_": true
 }
+
+[node name="HeaderLabel" type="Label" parent="GUI/TextArea"]
+margin_right = 320.0
+margin_bottom = 24.0
+custom_fonts/font = SubResource( 1 )
+text = "定型文"
 
 [node name="HeaderTextEdit" type="TextEdit" parent="GUI/TextArea"]
 margin_top = 24.0
 margin_right = 512.0
 margin_bottom = 112.0
 custom_fonts/font = SubResource( 2 )
-
-[node name="HeaderLabel" type="Label" parent="GUI/TextArea/HeaderTextEdit"]
-margin_top = -24.0
-margin_right = 320.0
-custom_fonts/font = SubResource( 1 )
-text = "定型文"
 
 [node name="TitleLineEdit" type="LineEdit" parent="GUI/TextArea"]
 margin_top = 136.0
@@ -171,22 +195,34 @@ margin_right = 256.0
 margin_bottom = 70.0
 custom_fonts/font = SubResource( 6 )
 
+[node name="FooterLabel" type="Label" parent="GUI/TextArea"]
+margin_top = 320.0
+margin_right = 320.0
+margin_bottom = 344.0
+custom_fonts/font = SubResource( 1 )
+text = "定型文"
+
 [node name="FooterTextEdit" type="TextEdit" parent="GUI/TextArea"]
 margin_top = 344.0
 margin_right = 512.0
 margin_bottom = 432.0
 custom_fonts/font = SubResource( 2 )
 
-[node name="FooterLabel" type="Label" parent="GUI/TextArea/FooterTextEdit"]
+[node name="LogMassageLabel" type="Label" parent="GUI/TextArea"]
+margin_left = 202.0
 margin_top = -24.0
-margin_right = 320.0
-custom_fonts/font = SubResource( 1 )
-text = "定型文"
+margin_right = 242.0
+custom_fonts/font = SubResource( 12 )
+
+[node name="LogTimer" type="Timer" parent="GUI/TextArea/LogMassageLabel"]
+wait_time = 0.5
+autostart = true
 
 [node name="CopyArea" type="Control" parent="GUI"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 
 [node name="BG" type="ColorRect" parent="GUI/CopyArea"]
 anchor_right = 1.0
@@ -209,6 +245,7 @@ custom_fonts/font = SubResource( 9 )
 text = "Close"
 
 [node name="Debug" type="Control" parent="."]
+visible = false
 margin_right = 512.0
 margin_bottom = 456.0
 mouse_filter = 2
@@ -225,5 +262,6 @@ process_mode = 0
 autostart = true
 
 [connection signal="pressed" from="GUI/Menu/CopyButton" to="." method="_on_CopyButton_pressed"]
+[connection signal="timeout" from="GUI/TextArea/LogMassageLabel/LogTimer" to="." method="_on_LogTimer_timeout"]
 [connection signal="pressed" from="GUI/CopyArea/CloseButton" to="." method="_on_CloseButton_pressed"]
 [connection signal="timeout" from="Debug/DebugTimer" to="." method="_on_DebugTimer_timeout"]

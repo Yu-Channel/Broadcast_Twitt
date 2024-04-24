@@ -29,7 +29,10 @@
     {
       "title": "Todo",
       "tasks": [
-        0
+        0,
+        2,
+        4,
+        5
       ]
     },
     {
@@ -41,7 +44,8 @@
     {
       "title": "Done",
       "tasks": [
-
+        1,
+        3
       ]
     }
   ],
@@ -49,6 +53,31 @@
     {
       "category": 0,
       "title": "動画タイトルにヘッダー・フッター枠を追加",
+      "details": ""
+    },
+    {
+      "category": 0,
+      "title": "たくさん保存・読み込みできるように",
+      "details": ""
+    },
+    {
+      "category": 0,
+      "title": "ハッシュタグをリストから選択できるように",
+      "details": ""
+    },
+    {
+      "category": 0,
+      "title": "読み書きのログを表示",
+      "details": ""
+    },
+    {
+      "category": 0,
+      "title": "メモ欄を追加",
+      "details": ""
+    },
+    {
+      "category": 0,
+      "title": "メニューにタイトルを読み込み",
       "details": ""
     }
   ]

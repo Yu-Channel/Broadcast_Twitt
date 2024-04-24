@@ -1,6 +1,7 @@
 extends Node2D
 
 onready var debug_label = $Debug/DebugLabel
+onready var log_massage_label = $GUI/TextArea/LogMassageLabel
 
 onready var header_text_edit = $GUI/TextArea/HeaderTextEdit
 onready var title_line_edit = $GUI/TextArea/TitleLineEdit
@@ -32,3 +33,6 @@ func _on_CloseButton_pressed():
 
 func _on_DebugTimer_timeout():
 	debug_label.text = Grobal.debug_code
+
+func _on_LogTimer_timeout():
+	log_massage_label.text = Grobal.log_message

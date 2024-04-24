@@ -16,7 +16,7 @@ func _ready():
 	load_menu = get_popup()
 	
 	for i in range(Grobal.menu_quantity):
-		load_menu.add_item("Open" + str(i + 1))
+		load_menu.add_item("Load" + str(i + 1))
 	
 	load_menu.connect("id_pressed", self, "_on_OpenMenu_pressed")
 
@@ -39,7 +39,8 @@ func _on_OpenMenu_pressed(ID):
 	
 	if save_data.has_section("data" + str(load_menu_id)):
 		print("セクションの読み込み成功", str(load_menu_id)) # debug
-		Grobal.log_message = "load: " + str(load_menu_id) 
+		Grobal.log_message = "load: " + str(load_menu_id)
+		
 		# 読み込むデータを指定
 		header_text_edit.text = save_data.get_value("data" + str(load_menu_id), "header")
 		title_line_edit.text = save_data.get_value("data" + str(load_menu_id), "title")
