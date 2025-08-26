@@ -1,4 +1,4 @@
-tool
+@tool
 extends VBoxContainer
 
 enum INTENTION {REPLACE, ADDITION}
@@ -7,13 +7,13 @@ var edit: LineEdit
 var label: Label
 var old_focus: Control = null
 
-export var text: String = "" setget set_text, get_text
+@export var text: String = "": get = get_text, set = set_text
 
-export(INTENTION) var default_intention := INTENTION.ADDITION
-export var double_click := true
+@export var default_intention := INTENTION.ADDITION
+@export var double_click := true
 
 signal text_changed(new_text)
-signal text_entered(new_text)
+signal text_submitted(new_text)
 
 func set_text(value):
 	text = value
@@ -32,7 +32,7 @@ func update_content(val=null):
 		edit.text = text
 
 func _ready():
-	self.alignment = BoxContainer.ALIGN_CENTER
+	self.alignment = BoxContainer.ALIGNMENT_CENTER
 	self.mouse_filter = Control.MOUSE_FILTER_PASS
 	
 	label = Label.new()
@@ -44,21 +44,21 @@ func _ready():
 	label.autowrap = true
 	label.max_lines_visible = 2
 	
-	label.connect("gui_input", self, "label_input")
+	label.connect("gui_input", Callable(self, "label_input"))
 	add_child(label)
 	
 	edit = LineEdit.new()
 	edit.visible = false
 	edit.size_flags_horizontal = SIZE_EXPAND_FILL
 	edit.size_flags_vertical = SIZE_FILL
-	edit.connect("text_entered", self, "edit_text_entered")
-	edit.connect("gui_input", self, "edit_input")
+	edit.connect("text_submitted", Callable(self, "edit_text_entered"))
+	edit.connect("gui_input", Callable(self, "edit_input"))
 	add_child(edit)
 	
 	update_content()
 
 func label_input(event):
-	if event is InputEventMouseButton and event.is_pressed() and event.button_index==BUTTON_LEFT and (event.is_doubleclick() if double_click else true):
+	if event is InputEventMouseButton and event.is_pressed() and event.button_index==MOUSE_BUTTON_LEFT and (event.is_double_click() if double_click else true):
 		show_edit()
 		label.accept_event()
 
@@ -69,12 +69,12 @@ func edit_input(event):
 func edit_text_entered(_new):
 	update_content(edit.text)
 	show_label()
-	emit_signal("text_entered")
+	emit_signal("text_submitted")
 
 func _input(event):
 	if (event is InputEventMouseButton) and event.pressed and edit.visible:
 		var local = edit.make_input_local(event)
-		if not Rect2(Vector2(0,0), edit.rect_size).has_point(local.position):
+		if not Rect2(Vector2(0,0), edit.size).has_point(local.position):
 			show_label()
 
 func show_edit(p_intention=null):
@@ -82,7 +82,7 @@ func show_edit(p_intention=null):
 		return
 	
 	if focus_mode == FOCUS_NONE:
-		old_focus = get_focus_owner()
+		old_focus = get_viewport().gui_get_focus_owner()
 	
 	var intention = p_intention
 	if intention == null:
@@ -93,15 +93,15 @@ func show_edit(p_intention=null):
 	edit.grab_focus()
 	match intention:
 		INTENTION.ADDITION:
-			edit.caret_position = len(edit.text)
+			edit.caret_column = len(edit.text)
 		INTENTION.REPLACE:
 			edit.select_all()
 
-func show_label(apply_changes=true):
+func show_label(_apply_changes=true):
 	if label.visible:
 		return
 	
-	if apply_changes:
+	if _apply_changes:
 		update_content(edit.text)
 		emit_signal("text_changed", text)
 	

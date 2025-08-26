@@ -4,11 +4,11 @@ flag=0
 
 [data1]
 
-header="asdfasdfsafdas"
-title="asdfsdafds"
-url=""
-hashtag="asdfsafdsafd"
-footer="sdfasdfasfdsafasdf"
+header="[配信開始]"
+title="[たべてみた]土の味"
+url="http://naniani.tv"
+hashtag="#からし"
+footer="てすとしてみる"
 
 [data2]
 
@@ -17,3 +17,12 @@ title="asdfsdafds"
 url=""
 hashtag="asdfsafdsafd"
 footer="sdfasdfasfdsafasdf"
+
+[data3]
+
+header="[配信開始]"
+title="[たべてみた]土の味"
+url="http://naniani.tv"
+hashtag="#からし"
+footer="てすとしてみる"
+memo="asdfsafdsaf"

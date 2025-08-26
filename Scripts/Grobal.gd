@@ -15,7 +15,8 @@ var save_init = {
 	"Title": "",
 	"Url": "",
 	"Hashtag": "",
-	"Footer": ""
+	"Footer": "",
+	"memo": "",
 }
 
 var header = ""
@@ -23,3 +24,4 @@ var title = ""
 var url = ""
 var hashtag = ""
 var footer = ""
+var memo = ""

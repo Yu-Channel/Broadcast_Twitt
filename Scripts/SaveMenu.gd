@@ -1,12 +1,13 @@
 extends MenuButton
 
 #onready var main_node = $"/root/Main"
-onready var header_text_edit = $"/root/Main/GUI/TextArea/HeaderTextEdit"
-onready var title_line_edit = $"/root/Main/GUI/TextArea/TitleLineEdit"
-onready var url_line_edit = $"/root/Main/GUI/TextArea/UrlLineEdit"
-onready var hashtag_line_edit = $"/root/Main/GUI/TextArea/HashtagLineEdit"
-onready var hashtag_option_button = $"/root/Main/GUI/TextArea/HashtagLineEdit/HashtagOptionButton"
-onready var footer_text_edit = $"/root/Main/GUI/TextArea/FooterTextEdit"
+@onready var header_text_edit = $"/root/Main/GUI/TextArea/HeaderTextEdit"
+@onready var title_line_edit = $"/root/Main/GUI/TextArea/TitleLineEdit"
+@onready var url_line_edit = $"/root/Main/GUI/TextArea/UrlLineEdit"
+@onready var hashtag_line_edit = $"/root/Main/GUI/TextArea/HashtagLineEdit"
+@onready var hashtag_option_button = $"/root/Main/GUI/TextArea/HashtagLineEdit/HashtagOptionButton"
+@onready var footer_text_edit = $"/root/Main/GUI/TextArea/FooterTextEdit"
+@onready var memo_text_edit = $"/root/Main/GUI/TextArea/MemoTextEdit"
 
 var save_menu
 
@@ -15,7 +16,7 @@ func _ready():
 	for i in range(Grobal.menu_quantity):
 		save_menu.add_item("Save" + str(i + 1))
 	
-	save_menu.connect("id_pressed", self, "_on_SaveMenu_pressed")
+	save_menu.connect("id_pressed", Callable(self, "_on_SaveMenu_pressed"))
 
 func _on_SaveMenu_pressed(ID):
 	print(save_menu.get_item_text(ID), " pressed") # debug
@@ -36,6 +37,7 @@ func _on_SaveMenu_pressed(ID):
 	save_data.set_value("data" + str(save_menu_id), "url", url_line_edit.text)
 	save_data.set_value("data" + str(save_menu_id), "hashtag", hashtag_line_edit.text)
 	save_data.set_value("data" + str(save_menu_id), "footer", footer_text_edit.text)
+	save_data.set_value("data" + str(save_menu_id), "memo", memo_text_edit.text)
 	
 	# セーブデータを保存する
 	save_data.save(Grobal.SAVEFILE)

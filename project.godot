@@ -6,12 +6,13 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
+config_version=5
 
 [application]
 
 config/name="Broadcast_Twitt"
 run/main_scene="res://Scene/Main.tscn"
+config/features=PackedStringArray("4.4")
 config/icon="res://icon.png"
 
 [autoload]
@@ -20,13 +21,13 @@ Grobal="*res://Scripts/Grobal.gd"
 
 [display]
 
-window/size/width=512
-window/size/height=456
+window/size/viewport_width=512
+window/size/viewport_height=600
 window/size/resizable=false
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/kanban_tasks/plugin.cfg" )
+enabled=PackedStringArray("res://addons/kanban_tasks/plugin.cfg")
 
 [gui]
 
@@ -38,4 +39,4 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-environment/default_environment="res://default_env.tres"
+environment/defaults/default_environment="res://default_env.tres"

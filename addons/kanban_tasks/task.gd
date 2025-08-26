@@ -1,13 +1,13 @@
-tool
+@tool
 extends Control
 
 const color_width := 8
 
-onready var panel_container := $PanelContainer
-onready var title_label := $PanelContainer/HBoxContainer/MarginContainer/VBoxContainer/Title
-onready var details_label := $PanelContainer/HBoxContainer/MarginContainer/VBoxContainer/Details
-onready var edit_button := $PanelContainer/HBoxContainer/EditButton
-onready var context_menu := $ContextMenu
+@onready var panel_container := $PanelContainer
+@onready var title_label := $PanelContainer/HBoxContainer/MarginContainer/VBoxContainer/Title
+@onready var details_label := $PanelContainer/HBoxContainer/MarginContainer/VBoxContainer/Details
+@onready var edit_button := $PanelContainer/HBoxContainer/EditButton
+@onready var context_menu := $ContextMenu
 
 signal change()
 
@@ -16,15 +16,15 @@ var style_box_panel: StyleBoxFlat
 
 var board
 
-var title: String setget set_title
-var details: String setget set_details
-var category setget set_category
+var title: String: set = set_title
+var details: String: set = set_details
+var category : set = set_category
 
 func set_category(val):
 	if is_instance_valid(category):
-		category.disconnect("changed", self, "update")
+		category.disconnect("changed", Callable(self, "update"))
 	category = val
-	category.connect("changed", self, "update")
+	category.connect("changed", Callable(self, "update"))
 	update()
 
 func copy():
@@ -42,7 +42,7 @@ func set_title(val):
 func set_details(val):
 	details = val
 	if is_instance_valid(details_label):
-		details_label.visible = board.show_details_preview and not details.strip_edges().empty()
+		details_label.visible = board.show_details_preview and not details.strip_edges().is_empty()
 		details_label.text = details
 	
 	if is_inside_tree():
@@ -68,7 +68,7 @@ func serialize():
 	return res
 
 func apply_filter(filter: String, descriptions: bool):
-	if filter.empty():
+	if filter.is_empty():
 		visible = true
 		return
 	
@@ -92,8 +92,8 @@ func __simplify_string(string: String) -> String:
 func show_details():
 	var d = board.get_details_dialog()
 	d.show_popup(title, details, category)
-	d.connect("change", self, "details_changed")
-	d.connect("popup_hide", self, "details_hidden", [], CONNECT_ONESHOT)
+	d.connect("change", Callable(self, "details_changed"))
+	d.connect("popup_hide", Callable(self, "details_hidden").bind(), CONNECT_ONE_SHOT)
 
 func details_changed():
 	var d = board.get_details_dialog()
@@ -104,24 +104,24 @@ func details_changed():
 
 func details_hidden():
 	var d = board.get_details_dialog()
-	d.disconnect("change", self, "details_changed")
+	d.disconnect("change", Callable(self, "details_changed"))
 
 func edit_label_entered():
 	grab_focus()
 
 func _ready():
 	title_label.text = title
-	title_label.connect("text_changed", self, "set_title")
-	title_label.connect("text_entered", self, "edit_label_entered")
+	title_label.connect("text_changed", Callable(self, "set_title"))
+	title_label.connect("text_submitted", Callable(self, "edit_label_entered"))
 	
-	details_label.visible = board.show_details_preview and not details.strip_edges().empty()
+	details_label.visible = board.show_details_preview and not details.strip_edges().is_empty()
 	details_label.text = details
 	
-	edit_button.connect("pressed", self, "show_details")
+	edit_button.connect("pressed", Callable(self, "show_details"))
 	
-	board.connect("settings_changed", self, "__on_settings_changed")
+	board.connect("changed", Callable(self, "__on_settings_changed"))
 	
-	context_menu.connect("id_pressed", self, "action")
+	context_menu.connect("id_pressed", Callable(self, "action"))
 	
 	style_box_focus = StyleBoxFlat.new()
 	style_box_focus.set_border_width_all(1)
@@ -133,20 +133,20 @@ func _ready():
 	style_box_panel.border_width_left = color_width
 	style_box_panel.border_color = category.color
 	style_box_panel.draw_center = false
-	panel_container.add_stylebox_override("panel", style_box_panel)
+	panel_container.add_theme_stylebox_override("panel", style_box_panel)
 	
 	#notification(NOTIFICATION_THEME_CHANGED)
 	update()
 	propagate_notification(NOTIFICATION_THEME_CHANGED)
 
 func __on_settings_changed():
-	details_label.visible = board.show_details_preview and not details.strip_edges().empty()
+	details_label.visible = board.show_details_preview and not details.strip_edges().is_empty()
 	details_label.text = details
 
 #func get_tooltip(at: Vector2 = Vector2.ZERO):
 #	return category.title+": "+title
 func update():
-	hint_tooltip = category.title+": "+title
+	tooltip_text = category.title+": "+title
 	
 	if is_instance_valid(style_box_focus):
 		style_box_focus.border_color = category.color
@@ -154,38 +154,38 @@ func update():
 		style_box_panel.border_color = category.color
 
 func _gui_input(event):
-	if event is InputEventMouseButton and event.button_index == BUTTON_RIGHT:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT:
 		accept_event()
 		__update_context_menu()
-		context_menu.rect_position = get_global_mouse_position()
+		context_menu.position = get_global_mouse_position()
 		context_menu.popup()
 	
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed() and event.is_doubleclick():
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed() and event.is_double_click():
 		action(ACTIONS.DETAILS)
 
 func _unhandled_key_input(event):
 	if not board.can_handle_shortcut(self):
 		return
 	if not event.is_echo() and event.is_pressed():
-		if board.shortcut_delete.is_shortcut(event):
-			get_tree().set_input_as_handled()
+		if board.shortcut_delete.matches_event(event):
+			get_viewport().set_input_as_handled()
 			action(ACTIONS.DELETE)
-		elif board.shortcut_rename.is_shortcut(event):
-			get_tree().set_input_as_handled()
+		elif board.shortcut_rename.matches_event(event):
+			get_viewport().set_input_as_handled()
 			action(ACTIONS.RENAME)
-		elif board.shortcut_confirm.is_shortcut(event):
-			get_tree().set_input_as_handled()
+		elif board.shortcut_confirm.matches_event(event):
+			get_viewport().set_input_as_handled()
 			action(ACTIONS.DETAILS)
-		elif board.shortcut_duplicate.is_shortcut(event):
-			get_tree().set_input_as_handled()
+		elif board.shortcut_duplicate.matches_event(event):
+			get_viewport().set_input_as_handled()
 			action(ACTIONS.DUPLICATE)
 
-func get_drag_data(position):
+func _get_drag_data(position):
 	var control = Control.new()
 	var rect = ColorRect.new()
 	control.add_child(rect)
-	rect.rect_size = get_rect().size
-	rect.rect_position = -position
+	rect.size = get_rect().size
+	rect.position = -position
 	rect.color = category.color
 	set_drag_preview(control)
 	return self
@@ -223,11 +223,11 @@ func action(action):
 			var n = copy()
 			get_owner().add_task(n)
 			get_owner().move_task(len(get_owner().tasks)-1, get_owner().tasks.find(self)+1)
-			yield(get_tree().create_timer(0.0), "timeout")
+			await get_tree().create_timer(0.0).timeout
 			n.grab_focus()
 		ACTIONS.RENAME:
 			if context_menu.visible:
-				yield(context_menu, "popup_hide")
+				await context_menu.popup_hide
 			title_label.show_edit()
 
 func _notification(what):
@@ -244,4 +244,4 @@ func _notification(what):
 				edit_button.icon = get_icon("Edit", "EditorIcons")
 		NOTIFICATION_DRAW:
 			if has_focus():
-				style_box_focus.draw(get_canvas_item(), Rect2(panel_container.get_global_rect().position-get_global_rect().position, panel_container.rect_size))
+				style_box_focus.draw(get_canvas_item(), Rect2(panel_container.get_global_rect().position-get_global_rect().position, panel_container.size))

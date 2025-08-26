@@ -1,12 +1,12 @@
 extends MenuButton
 
 #onready var main_node = $"/root/Main"
-onready var header_text_edit = $"/root/Main/GUI/TextArea/HeaderTextEdit"
-onready var title_line_edit = $"/root/Main/GUI/TextArea/TitleLineEdit"
-onready var url_line_edit = $"/root/Main/GUI/TextArea/UrlLineEdit"
-onready var hashtag_line_edit = $"/root/Main/GUI/TextArea/HashtagLineEdit"
-onready var hashtag_option_button = $"/root/Main/GUI/TextArea/HashtagLineEdit/HashtagOptionButton"
-onready var footer_text_edit = $"/root/Main/GUI/TextArea/FooterTextEdit"
+@onready var header_text_edit = $"/root/Main/GUI/TextArea/HeaderTextEdit"
+@onready var title_line_edit = $"/root/Main/GUI/TextArea/TitleLineEdit"
+@onready var url_line_edit = $"/root/Main/GUI/TextArea/UrlLineEdit"
+@onready var hashtag_line_edit = $"/root/Main/GUI/TextArea/HashtagLineEdit"
+@onready var hashtag_option_button = $"/root/Main/GUI/TextArea/HashtagLineEdit/HashtagOptionButton"
+@onready var footer_text_edit = $"/root/Main/GUI/TextArea/FooterTextEdit"
 #onready var copy_area = $"/root/Main/GUI/CopyArea"
 #onready var copy_area_text_edit = $"/root/Main/GUI/CopyArea/TextEdit"
 
@@ -18,7 +18,7 @@ func _ready():
 	for i in range(Grobal.menu_quantity):
 		load_menu.add_item("Open" + str(i + 1))
 	
-	load_menu.connect("id_pressed", self, "_on_OpenMenu_pressed")
+	load_menu.connect("id_pressed", Callable(self, "_on_OpenMenu_pressed"))
 
 func _on_OpenMenu_pressed(ID):
 	print(load_menu.get_item_text(ID), " pressed") # debug
