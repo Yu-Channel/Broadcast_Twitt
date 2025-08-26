@@ -313,6 +313,7 @@ layout_mode = 0
 offset_top = 416.0
 offset_right = 512.0
 offset_bottom = 576.0
+theme_override_fonts/font = ExtResource("1")
 metadata/_edit_lock_ = true
 
 [node name="MemoLabel" type="Label" parent="GUI/TextArea"]

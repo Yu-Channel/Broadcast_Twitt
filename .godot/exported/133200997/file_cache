@@ -1,6 +1,6 @@
-res://addons/kanban_tasks/board.tscn::b2361544803dedf9cf36e0cb7cea30b5::1755945362::res://.godot/exported/133200997/export-9ef62a0f23696bbc1e3ce9c3576d0780-board.scn
-res://addons/kanban_tasks/column.tscn::4c86f2f9264905739535ad5acc94fb85::1755945362::res://.godot/exported/133200997/export-ffb4a7f749429defd9c4386e8b724e84-column.scn
-res://addons/kanban_tasks/stage.tscn::e1d9eebfa3573b629d21725c4808140a::1755945362::res://.godot/exported/133200997/export-60683c564bd015ef7e8860953392474d-stage.scn
-res://addons/kanban_tasks/task.tscn::2cd0996a79c7410eb0e7b43ea3d532d4::1755945362::res://.godot/exported/133200997/export-1cf50e060a413338ea6e898bbb29c277-task.scn
-res://Scene/Main.tscn::275ddcb3ae5e95f1a9c4386c0e049eda::1756139102::res://.godot/exported/133200997/export-462e7f79464dd9b8bb865715bda8156a-Main.scn
-res://default_env.tres::fbc598cff964c47cb51e089594768d51::1756139102::res://.godot/exported/133200997/export-7cf3fd67ad9f55210191d77b582b8209-default_env.res
+res://addons/kanban_tasks/board.tscn::87d9c63445eb4548c68c15e28b6ae8d2::1756181728::res://.godot/exported/133200997/export-9ef62a0f23696bbc1e3ce9c3576d0780-board.scn
+res://addons/kanban_tasks/column.tscn::a19d0efd09388e71d294a6238150f531::1756181728::res://.godot/exported/133200997/export-ffb4a7f749429defd9c4386e8b724e84-column.scn
+res://addons/kanban_tasks/stage.tscn::8f6cd696cf924dcc1d7af65653bf935b::1756181728::res://.godot/exported/133200997/export-60683c564bd015ef7e8860953392474d-stage.scn
+res://addons/kanban_tasks/task.tscn::9cc7339be2dfb5e03aa3710e13ad23ab::1756181728::res://.godot/exported/133200997/export-1cf50e060a413338ea6e898bbb29c277-task.scn
+res://Scene/Main.tscn::d67bfd0a4d9093fbe0df9cf42fa61cc2::1756182308::res://.godot/exported/133200997/export-462e7f79464dd9b8bb865715bda8156a-Main.scn
+res://default_env.tres::fbc598cff964c47cb51e089594768d51::1756182308::res://.godot/exported/133200997/export-7cf3fd67ad9f55210191d77b582b8209-default_env.res
